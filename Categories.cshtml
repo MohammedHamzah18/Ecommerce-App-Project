@@ -1,0 +1,42 @@
+@model IEnumerable<myntra.Models.Category>
+@{
+    ViewData["Title"] = "Manage Categories";
+}
+
+<h2 class="mb-3">Categories</h2>
+
+<form asp-action="CreateCategory" method="post" class="row g-2 mb-4">
+    @Html.AntiForgeryToken()
+    <div class="col-md-4">
+        <input type="text" name="name" class="form-control" placeholder="Category name" required />
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-primary w-100" type="submit">Add</button>
+    </div>
+</form>
+
+<table class="table table-bordered align-middle">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th style="width: 160px;"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model)
+        {
+            <tr>
+                <td>@category.Name</td>
+                <td>
+                    <form asp-action="DeleteCategory" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@category.Id" />
+                        <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p class="text-muted small">A category can only be deleted when it has no products.</p>

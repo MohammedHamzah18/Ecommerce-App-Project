@@ -1,0 +1,31 @@
+@model myntra.Models.Product
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<div class="row g-4">
+    <div class="col-md-5">
+        <img src="@Model.ImageUrl" alt="@Model.Name" class="img-fluid rounded shadow-sm" />
+    </div>
+    <div class="col-md-7">
+        <h2>@Model.Name</h2>
+        <p class="text-muted">@Model.Category?.Name</p>
+        <p>@Model.Description</p>
+        <h4 class="mb-3">Rs @Model.Price</h4>
+        <p><strong>In Stock:</strong> @Model.Stock</p>
+
+        @if (User.Identity?.IsAuthenticated ?? false)
+        {
+            <form asp-controller="Cart" asp-action="Add" method="post" class="d-flex gap-2 align-items-center">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="productId" value="@Model.Id" />
+                <input type="number" name="quantity" class="form-control" style="max-width: 120px;" value="1" min="1" max="@Model.Stock" />
+                <button class="btn btn-primary" type="submit">Add To Cart</button>
+            </form>
+        }
+        else
+        {
+            <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-primary">Login to Buy</a>
+        }
+    </div>
+</div>

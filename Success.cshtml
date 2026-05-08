@@ -1,0 +1,11 @@
+@model myntra.Models.Order
+@{
+    ViewData["Title"] = "Order Success";
+}
+
+<div class="text-center py-5">
+    <h2 class="text-success">Order Placed Successfully</h2>
+    <p class="lead">Thank you for shopping with myntra.</p>
+    <p>Your order id is <strong>#@Model.Id</strong>.</p>
+    <a asp-action="Index" class="btn btn-primary">View My Orders</a>
+</div>
